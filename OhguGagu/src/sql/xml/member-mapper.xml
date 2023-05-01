@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="loginMember">
+		SELECT *
+		FROM TB_MEMBER
+		WHERE MEMBER_ID = ?
+		AND MEMBER_PWD = ?
+		AND IS_DELETED = 'N'
+	</entry>
+	
+	<entry key="insertMember">
+		INSERT INTO TB_MEMBER(MEMBER_NO
+                    , MEMBER_ID
+                    , MEMBER_PWD
+                    , MEMBER_NAME
+                    , EMAIL
+                    , GENDER
+                    , PHONE
+                    , BIRTH_DATE)
+		VALUES (SEQ_MEM.NEXTVAL, ?, ?, ?, ?, ?, ?, ?)
+	</entry>
+	<entry key="deleteMember">
+		UPDATE TB_MEMBER
+		   SET IS_DELETED = 'Y'
+		 WHERE MEMBER_ID = ?
+		   AND MEMBER_PWD = ?
+	</entry>
+	<entry key="updateMemberAfterOrder">
+		UPDATE TB_MEMBER
+		   SET TOTAL_PAYMENT = TOTAL_PAYMENT + ?,
+               POINT = POINT - ? + ?
+		WHERE MEMBER_NO = ?
+	</entry>
+	<entry key="getMemberGrade">
+		SELECT GRADE_NAME
+		FROM TB_MEMBER_GRADE
+		WHERE ? BETWEEN MIN AND MAX
+	</entry>
+</properties>

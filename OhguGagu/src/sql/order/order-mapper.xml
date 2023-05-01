@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<!-- Cart 관련 쿼리  -->
+	<entry key="insertCart">
+		INSERT INTO TB_CART
+		VALUES (SEQ_CRT.NEXTVAL, ?, ?, ?)
+	</entry>
+	<entry key="deleteCart">
+		DELETE FROM TB_CART
+		WHERE MEMBER_NO = ? 
+		AND PRODUCT_NO = ? 
+	</entry>
+	<entry key="updateCart">
+		UPDATE TB_CART
+		SET AMOUNT = ( SELECT AMOUNT
+		               FROM TB_CART
+		               WHERE MEMBER_NO = ?
+		               AND PRODUCT_NO = ?
+		             ) + ?
+		WHERE MEMBER_NO = ?
+		AND PRODUCT_NO = ?
+	</entry>
+	<entry key="selectCart">
+		SELECT CART_NO, PRODUCT_NO, FILE_NAME, PRODUCT_NAME, P_COLOR, AMOUNT, PRICE, DISCOUNT_RATE
+		FROM TB_CART
+		JOIN TB_PRODUCT USING (PRODUCT_NO)
+		JOIN TB_IMAGE USING (PRODUCT_NO)
+		WHERE TB_CART.MEMBER_NO = ?
+		AND IS_THUMBNAIL = 'Y'
+	</entry>
+	<entry key="selectMemberGrade">
+		SELECT * FROM TB_MEMBER_GRADE
+		WHERE ? BETWEEN MIN AND MAX
+	</entry>
+	<entry key="setAmountCart">
+		UPDATE TB_CART
+		SET AMOUNT = ?
+		WHERE MEMBER_NO = ?
+		AND PRODUCT_NO = ?
+	</entry>
+	<entry key="selectAddress">
+		SELECT * FROM TB_ADDRESS
+		WHERE MEMBER_NO = ?
+	</entry>
+	<!-- order -->
+	<entry key="insertOrder">
+		INSERT INTO TB_ORDER
+		VALUES ( SEQ_OD.NEXTVAL
+			   , ?
+			   , ?
+			   , ?
+			   , DEFAULT
+			   , ?
+			   , ? 
+			   , NULL
+			   , DEFAULT
+			   , ?
+			   , ?
+			   , ?
+			   , ?)
+	</entry>
+	<entry key="insertOrderProduct">
+		INSERT INTO TB_ORDER_PRODUCT
+		VALUES ( SEQ_OD_PD.NEXTVAL
+			   , SEQ_OD.CURRVAL
+			   , ? )
+	</entry>
+	<entry key="selectOrder">
+		SELECT * FROM TB_ORDER
+		WHERE MEMBER_NO = ?	
+		ORDER BY ORDERED_AT DESC 
+	</entry>
+	<entry key="selectOrderByOrderedAt">
+		SELECT *
+		FROM TB_ORDER
+		WHERE MEMBER_NO = ? 
+		AND ORDERED_AT BETWEEN ? AND ?
+		ORDER BY ORDERED_AT DESC 
+	</entry>
+	<entry key="selectOrderByOrderNo">
+		SELECT * FROM TB_ORDER
+		WHERE ORDER_NO = ? 
+	</entry>
+	<entry key="selectAddressByOrderNo">
+		SELECT * FROM TB_ADDRESS
+		WHERE ADDRESS_NO = ( SELECT ADDRESS_NO 
+		 					 FROM TB_ORDER
+							 WHERE ORDER_NO = ?)
+	</entry>
+	<entry key="orderUpdateRefund">
+		UPDATE TB_ORDER
+		SET STATUS = '환불요청'
+		WHERE ORDER_NO = ?
+	</entry>
+	
+	<!-- admin -->
+	<entry key="adminSelectListCount">
+		SELECT COUNT(*) COUNT
+		FROM TB_ORDER
+	</entry>
+	
+	<entry key="adminSelectOrderList">
+		SELECT *
+		FROM (SELECT ROWNUM RNUM, A.*
+		      FROM ( SELECT * 
+		      		 FROM TB_ORDER
+		             ORDER BY ORDER_NO DESC) A )
+		WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="orderUpdate">
+		UPDATE TB_ORDER
+		SET STATUS = ?
+		  , WAYBILL_NO = ?
+		WHERE ORDER_NO = ?
+	</entry>
+</properties>

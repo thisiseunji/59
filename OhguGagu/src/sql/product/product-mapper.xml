@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="selectProductList">
+		  SELECT *
+		  FROM TB_PRODUCT
+	</entry>
+	
+	<entry key="selectByProductName">
+		 SELECT *
+		 FROM TB_PRODUCT
+		 WHERE PRODUCT_NAME LIKE '%?%'
+	</entry>
+	<entry key="selectProductByOrderNo">
+		SELECT *
+		FROM TB_PRODUCT
+		WHERE PRODUCT_NO IN (SELECT PRODUCT_NO
+							 FROM TB_ORDER_PRODUCT
+							 WHERE ORDER_NO = ?)
+	</entry>
+</properties>

@@ -1,0 +1,9 @@
+diff a/OhguGagu/src/com/ohgu/member/controller/LoginController.java b/OhguGagu/src/com/ohgu/member/controller/LoginController.java	(rejected hunks)
+@@ -43,7 +43,6 @@
+ 		
+ 		Member loginUser = new MemberService().loginMember(m);
+ 		
+-		
+ 		if(loginUser == null) {
+ 			// 로그인 실패
+ 			request.setAttribute("alertMsg", "로그인 실패");

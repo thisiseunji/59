@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="selectAddressList">
+		SELECT ADDRESS_NO, ADDR, ADDR_DETAIL
+ 		  FROM TB_ADDRESS
+	</entry>
+	
+	<entry key="address">
+		SELECT PHONE, MEMBER_NAME
+		  FROM TB_MEMBER
+		 WHERE MEMBER_NO = ?
+	</entry>
+	
+	<entry key="insertAddress">
+		INSERT INTO TB_ADDRESS(ADDRESS_NO
+                     , ADDR
+                     , ADDR_DETAIL
+                     , PHONE
+                     , RECEIVER
+                     , MEMBER_NO)
+	            VALUES(SEQ_BNO.NEXTVAL
+	                 , ?
+	                 , ?
+	                 , ?
+	                 , ?
+	                 , ?)
+	</entry>
+	
+	<entry key="">
+	</entry>
+	
+	<entry key="">
+	</entry>
+</properties>

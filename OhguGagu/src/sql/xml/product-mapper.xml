@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	
+	<entry key="insertProduct">
+		SELECT PRODUCT_NO, CATEGORY, PRODUCT_NAME, PRICE, P_COLOR, P_SIZE, P_MATERIAL, P_DETAIL, DISCOUNT_RATE, FILE_NAME
+ 		  FROM  TB_PRODUCT
+		  JOIN TB_IMAGE USING (PRODUCT_NO)
+		 WHERE PRODUCT_NO = ?
+	</entry>
+	
+	<entry key="insertLike">
+		INSERT INTO TB_LIKES
+		VALUES (?, ?)
+	</entry>
+	
+	
+	<entry key="selectProductList">
+		SELECT *
+		  FROM TB_PRODUCT
+	</entry>
+	
+	<entry key="selectByProductName">
+		SELECT *
+		  FROM TB_PRODUCT
+		 WHERE PRODUCT_NAME LIKE '%?%'
+	</entry>
+	
+		<entry key="selectProductList">
+		SELECT *
+		  FROM TB_PRODUCT
+	</entry>
+	
+	<entry key="selectByProductName">
+		SELECT *
+		  FROM TB_PRODUCT
+		 WHERE PRODUCT_NAME LIKE '%?%'
+	</entry>
+	
+	<entry key="selectListCount">
+		SELECT COUNT(*) COUNT
+		  FROM TB_PRODUCT
+		 WHERE STOCK != '0'
+	</entry>
+	
+	<entry key="selectList">
+		SELECT *
+		  FROM (
+		    SELECT ROWNUM RNUM
+		         , A.*
+		      FROM (
+		        SELECT PRODUCT_NO
+		             , CATEGORY
+		             , PRODUCT_NAME
+		             , PRICE
+		             , STOCK
+		             , P_COLOR
+		             , P_SIZE
+		             , P_MATERIAL
+		             , P_DETAIL
+		             , DISCOUNT_RATE
+		          FROM TB_PRODUCT P
+		         WHERE STOCK != '0'
+		         ORDER BY PRODUCT_NO
+		     ) A
+		  )
+		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+</properties>
